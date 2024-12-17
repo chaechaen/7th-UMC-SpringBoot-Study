@@ -1,7 +1,7 @@
-package com.example.spring_study_hospital.domain.reservation;
+package com.example.spring_study_hospital.domain.reservation.domain;
 
-import com.example.spring_study_hospital.domain.doctor.Doctor;
-import com.example.spring_study_hospital.domain.patient.Patient;
+import com.example.spring_study_hospital.domain.doctor.domain.Doctor;
+import com.example.spring_study_hospital.domain.patient.domain.Patient;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -29,7 +29,7 @@ public class Reservation {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    private LocalDateTime createdAt;
+    private LocalDateTime reservationDate;
 
     private Long price;
 }

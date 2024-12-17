@@ -1,6 +1,6 @@
-package com.example.spring_study_hospital.domain.patient;
+package com.example.spring_study_hospital.domain.patient.domain;
 
-import com.example.spring_study_hospital.domain.reservation.Reservation;
+import com.example.spring_study_hospital.domain.reservation.domain.Reservation;
 import jakarta.persistence.*;
 import lombok.*;
 

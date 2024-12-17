@@ -1,6 +1,6 @@
-package com.example.spring_study_hospital.domain.doctor;
+package com.example.spring_study_hospital.domain.doctor.domain;
 
-import com.example.spring_study_hospital.domain.department.Department;
+import com.example.spring_study_hospital.domain.department.domain.Department;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,10 +16,12 @@ public class Doctor {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "department_id")
+    @JoinColumn(name = "department_id", nullable = false)
     private Department department;
 
-    private Long career;
+    @Column(nullable = false)
+    private Long career; // 경력 (년수)
 
+    @Column(nullable = false)
     private String name;
 }
