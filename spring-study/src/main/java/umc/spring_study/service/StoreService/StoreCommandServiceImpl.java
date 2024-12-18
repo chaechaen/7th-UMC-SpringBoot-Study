@@ -3,15 +3,15 @@ package umc.spring_study.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import umc.spring_study.apiPayload.code.status.ErrorStatus;
+import umc.spring_study.apiPayload.exception.handler.GeneralException;
 import umc.spring_study.converter.StoreConverter;
-import umc.spring_study.domain.Member;
-import umc.spring_study.domain.Mission;
-import umc.spring_study.domain.Review;
-import umc.spring_study.domain.Store;
+import umc.spring_study.domain.*;
 import umc.spring_study.domain.mapping.MemberMission;
 import umc.spring_study.repository.MemberRepository.MemberRepository;
 import umc.spring_study.repository.MissionRepository.MemberMissionRepository;
 import umc.spring_study.repository.MissionRepository.MissionRepository;
+import umc.spring_study.repository.RegionRepository;
 import umc.spring_study.repository.ReviewRepository;
 import umc.spring_study.repository.StoreRepository;
 import umc.spring_study.web.dto.MissionDTO.MissionRequestDTO;
@@ -32,6 +32,22 @@ public class StoreCommandServiceImpl implements StoreCommandService{
 
     private final MemberMissionRepository memberMissionRepository;
 
+    private final RegionRepository regionRepository;
+
+    @Override
+    public Store addStore(StoreRequestDTO.AddStoreDTO request) {
+        Region region = regionRepository.findByName(request.getRegionName())
+                .orElseThrow(() -> new GeneralException(ErrorStatus.REGION_NOT_FOUND));
+
+        Store store = Store.builder()
+                .name(request.getName())
+                .address(request.getAddress())
+                .score(0.0f)
+                .region(region)
+                .build();
+
+        return storeRepository.save(store);
+    }
 
     @Override
     public Review createReview(Long memberId, Long storeId, StoreRequestDTO.ReveiwDTO request) {

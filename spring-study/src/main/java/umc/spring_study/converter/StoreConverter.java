@@ -3,6 +3,7 @@ package umc.spring_study.converter;
 import org.springframework.data.domain.Page;
 import umc.spring_study.domain.Mission;
 import umc.spring_study.domain.Review;
+import umc.spring_study.domain.Store;
 import umc.spring_study.web.dto.MissionDTO.MissionResponseDTO;
 import umc.spring_study.web.dto.StoreDTO.StoreRequestDTO;
 import umc.spring_study.web.dto.StoreDTO.StoreResponseDTO;
@@ -13,6 +14,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class StoreConverter {
+
+    public static StoreResponseDTO.CreateStoreResultDTO toCreateStoreResultDTO(Store store) {
+        return StoreResponseDTO.CreateStoreResultDTO.builder()
+                .storeId(store.getId())
+                .createdAt(LocalDateTime.now())
+                .build();
+    }
 
     public static Review toReview(StoreRequestDTO.ReveiwDTO request){
         return Review.builder()
@@ -59,6 +67,30 @@ public class StoreConverter {
                 .totalElements(reviewList.getTotalElements())
                 .listSize(reviewPreViewDTOList.size())
                 .reviewList(reviewPreViewDTOList)
+                .build();
+    }
+
+    public static StoreResponseDTO.MissionPreviewDTO missionPreviewDTO(Mission mission){
+        return StoreResponseDTO.MissionPreviewDTO.builder()
+                .missionId(mission.getId())
+                .reward(mission.getReward())
+                .missionSpec(mission.getMissionSpec())
+                .deadline(mission.getDeadline())
+                .build();
+    }
+
+    public static StoreResponseDTO.MissionPreviewListDTO missionPreviewListDTO(Page<Mission> missionList){
+        List<StoreResponseDTO.MissionPreviewDTO> missionPreViewDTOList = missionList.stream()
+                .map(StoreConverter::missionPreviewDTO)
+                .collect(Collectors.toList());
+
+        return StoreResponseDTO.MissionPreviewListDTO.builder()
+                .isLast(missionList.isLast())
+                .isFirst(missionList.isFirst())
+                .totalPage(missionList.getTotalPages())
+                .totalElements(missionList.getTotalElements())
+                .listSize(missionPreViewDTOList.size())
+                .missionList(missionPreViewDTOList)
                 .build();
     }
 }

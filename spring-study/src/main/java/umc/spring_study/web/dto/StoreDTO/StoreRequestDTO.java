@@ -15,4 +15,16 @@ public class StoreRequestDTO {
         @NotBlank
         String body;
     }
+
+    @Getter
+    public static class AddStoreDTO {
+        @NotBlank
+        String name;
+
+        @NotBlank
+        String address;
+
+        @NotBlank
+        String regionName;
+    }
 }
